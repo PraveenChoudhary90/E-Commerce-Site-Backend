@@ -18,6 +18,7 @@ import UserOrderRoute from "./routes/GetOrderHistoryUserRoute.js";
 import AdminChangePasswordRoute from "./routes/AdminChangePasswordroute.js";
 import GetBannerUser from "./routes/GetBannerRoute.js"; 
 import GetUserProfileRoute from "./routes/GetProfileUserRoute.js";
+import UserPasswordchangeroute from "./routes/UserChangePasswordroute.js";
 
 
 connectDB();
@@ -39,7 +40,7 @@ app.use(express.urlencoded({extended:true}));
 
 
 app.use("/api/admin",AdminRoute,OrdersAdminRoute,GetAllUserAdminRoute,AddOfferRoute, AdminChangePasswordRoute);
-app.use("/api/user", UserRoute,GetProductUserRoute,UserOrderRoute,GetBannerUser,GetUserProfileRoute);
+app.use("/api/user", UserRoute,GetProductUserRoute,UserOrderRoute,GetBannerUser,GetUserProfileRoute, UserPasswordchangeroute);
 app.use("/api/products", AddCategoryRoute,AddAttributeRoute,AddProdutRoute,AddBannerRoute);
 
 const port = process.env.PORT || 8000
