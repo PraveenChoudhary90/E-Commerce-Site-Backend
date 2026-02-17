@@ -1,12 +1,10 @@
-import Order from "../models/OrderAdminModel.js";
 
-// 🔹 Get all orders for Admin
+import Order from "../models/PaymentModel.js";
+
 export const GetAllOrdersAdmin = async (req, res) => {
   try {
-    const orders = await Order.find({ isDeleted: false })
-      .populate("user", "name email") // populate user info
-      .populate("products.product", "name product_mrp user_price") // populate product info
-      .sort({ createdAt: -1 }); // latest orders first
+    const orders = await Order.find()
+      .sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,

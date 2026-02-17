@@ -1,12 +1,8 @@
-import Orders from "../models/UserOrderHistoryModel.js";
+import Orders from "../models/PaymentModel.js";
 
 export const getOrderHistoryUser = async (req, res) => {
     try {
-        const userId = req.params.userId; // get userId from route params
-        if (!userId) return res.status(400).json({ msg: "User ID is required" });
-
-        const orders = await Orders.find({ user: userId }).populate('user', 'name email');
-        
+        const orders = await Orders.find();
         res.status(200).json({ msg: "Orders fetched successfully", orders });
     } catch (error) {
         console.error(error);
