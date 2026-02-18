@@ -169,3 +169,48 @@ export const DeleteProduct = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+
+
+
+
+
+
+
+// Update Best Seller status
+export const updateBestSellerStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { isBestSeller } = req.body;
+
+    if (typeof isBestSeller !== "boolean") {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid value for isBestSeller" });
+    }
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      { isBestSeller },
+      { new: true }
+    );
+
+    if (!updatedProduct) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Product not found" });
+    }
+
+    // Optional: return all products (like a list)
+    const allProducts = await Product.find({ isDeleted: false });
+
+    res.status(200).json({
+      success: true,
+      count: allProducts.length,
+      data: allProducts,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
+};

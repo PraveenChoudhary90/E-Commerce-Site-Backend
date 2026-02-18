@@ -1,5 +1,16 @@
 import mongoose from "mongoose";
 
+
+const reviewSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  username: { type: String, required: true },
+  rating: { type: Number, required: true, min: 1, max: 5 },
+  comment: { type: String },
+  avatar: { type: String }, // optional user image URL
+  createdAt: { type: Date, default: Date.now }
+});
+
+
 const productSchema = new mongoose.Schema(
   {
     productId: { type: String, required: true, unique: true },
@@ -19,7 +30,14 @@ const productSchema = new mongoose.Schema(
       }
     ],
     images: [{ type: String }],
+
+    isBestSeller: { 
+  type: Boolean, 
+  default: false 
+},
+
      isDeleted: { type: Boolean, default: false } ,
+     reviews: [reviewSchema],
   },
   { timestamps: true }
 );
