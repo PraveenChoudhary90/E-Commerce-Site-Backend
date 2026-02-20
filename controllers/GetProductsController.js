@@ -2,15 +2,31 @@
 import Product from "../models/AddProductModel.js"
 
 
-export const GetProductsUser = async(req,res)=>{
-    try {
-       const product = await Product.find({isDeleted:false});
-       res.send({msg:"Product get successfully", product})
-    } catch (error) {
-        console.log(error);
-    }
+export const GetProductsUser = async (req, res) => {
+  try {
+    const products = await Product.find({ isDeleted: false })
+      .populate({
+        path: "product_category", // reference field
+        select: "name description", // jo fields chahiye
+      })
+      .populate({
+        path: "attributes.attribute", // agar attributes me reference hai
+        select: "name",
+      });
 
-}
+    res.status(200).send({
+      msg: "Products fetched successfully",
+      products,
+    });
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).send({
+      msg: "Server error while fetching products",
+      error: error.message,
+    });
+  }
+};
+
 
 
 
