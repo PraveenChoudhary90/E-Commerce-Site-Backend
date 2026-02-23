@@ -8,9 +8,9 @@ const route = express.Router();
 route.get("/reviews",adminAuth, getAllReviewsAdmin);
 
 // Delete a review
-route.delete("/review/:productId/:reviewId",adminAuth, deleteReviewAdmin);
+route.delete("/reviews/:productId/:reviewId",adminAuth, deleteReviewAdmin);
 
 // Edit a review
-route.put("/review/:productId/:reviewId", adminAuth, editReviewAdmin);
+route.put("/reviews/:productId/:reviewId", adminAuth, editReviewAdmin);
 
 export default route;

@@ -7,8 +7,8 @@ import { addReview, getReviews } from "../controllers/RatingsorCommentController
 const route = express.Router();
 
 
-route.post("/add-rating-review/:id", userAuth, addReview);
-route.get("/get-rating-review/:id",getReviews);
+route.post("/add-rating-review", userAuth, addReview);
+route.get("/get-rating-review/:productId",getReviews);
 
 
 export default route;
