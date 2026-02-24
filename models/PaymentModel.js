@@ -1,5 +1,10 @@
 import mongoose from "mongoose";
 
+function generateInvoiceNumber() {
+  return Math.floor(10000000 + Math.random() * 90000000).toString();
+}
+
+
 const OrderSchema = new mongoose.Schema(
   {
     user: {
@@ -46,9 +51,18 @@ const OrderSchema = new mongoose.Schema(
       enum: ["created", "paid", "failed", "cancelled"],
       default: "created",
     },
+      invoiceNumber: { type: String, unique: true },
   },
   { timestamps: true }
 );
+
+
+
+OrderSchema.pre("save", function (next) {
+  if (!this.invoiceNumber) {
+    this.invoiceNumber = generateInvoiceNumber();
+  }
+});
 
 const Order = mongoose.model("PaymentOrder", OrderSchema);
 
