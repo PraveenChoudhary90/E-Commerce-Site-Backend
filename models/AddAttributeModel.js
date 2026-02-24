@@ -8,7 +8,6 @@ const attributeSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-      unique: true,
     },
     parentAttribute: {
       type: Schema.Types.ObjectId,
@@ -17,6 +16,12 @@ const attributeSchema = new Schema(
     },
   },
   { timestamps: true }
+);
+
+// Compound index: block duplicates only under same parent
+attributeSchema.index(
+  { name: 1, parentAttribute: 1 },
+  { unique: true }
 );
 
 export default model("Attribute", attributeSchema);

@@ -20,9 +20,16 @@ export const createAttribute = async (req, res) => {
       return res.status(400).json({ message: "Attribute name is required" });
     }
 
-    const existing = await Attribute.findOne({ name: name.trim() });
+    // Check duplicate under same parent only
+    const existing = await Attribute.findOne({
+      name: name.trim(),
+      parentAttribute: parentAttribute || null,
+    });
+
     if (existing) {
-      return res.status(400).json({ message: "Attribute with this name already exists" });
+      return res
+        .status(400)
+        .json({ message: "This attribute already exists under selected parent" });
     }
 
     const attr = new Attribute({
@@ -47,7 +54,23 @@ export const updateAttribute = async (req, res) => {
     const attr = await Attribute.findById(id);
     if (!attr) return res.status(404).json({ message: "Attribute not found" });
 
-    if (name) attr.name = name.trim();
+    // Check duplicate on update under same parent
+    if (name && name.trim()) {
+      const existing = await Attribute.findOne({
+        _id: { $ne: id },
+        name: name.trim(),
+        parentAttribute: parentAttribute || null,
+      });
+
+      if (existing) {
+        return res
+          .status(400)
+          .json({ message: "This attribute already exists under selected parent" });
+      }
+
+      attr.name = name.trim();
+    }
+
     if (parentAttribute !== undefined) attr.parentAttribute = parentAttribute || null;
 
     await attr.save();
