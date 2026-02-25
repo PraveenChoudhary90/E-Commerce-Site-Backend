@@ -23,6 +23,8 @@ import PaymentRoute from "./routes/PaymentRoute.js";
 import GetOfferUserRoute from "./routes/GetOfferUserRoute.js";
 import RatingandReview from "./routes/RatingandreviewRoute.js";
 import AdminreviewRoute from "./routes/ReviewAdminRoute.js";
+import UserFeedBackRoute from "./routes/UserFeedBackRoute.js";
+import AdminFeedbackgetRoute from "./routes/AdminFeedBackGetRoute.js";
 
 
 connectDB();
@@ -43,9 +45,9 @@ app.use(express.urlencoded({extended:true}));
 
 
 
-app.use("/api/admin",AdminRoute,OrdersAdminRoute,GetAllUserAdminRoute,AddOfferRoute, AdminChangePasswordRoute, AdminreviewRoute);
+app.use("/api/admin",AdminRoute,OrdersAdminRoute,GetAllUserAdminRoute,AddOfferRoute, AdminChangePasswordRoute, AdminreviewRoute, AdminFeedbackgetRoute);
 app.use("/api/user", UserRoute,GetProductUserRoute,UserOrderRoute,GetBannerUser,GetUserProfileRoute, UserPasswordchangeroute,
-   GetOfferUserRoute, RatingandReview);
+   GetOfferUserRoute, RatingandReview,UserFeedBackRoute);
 app.use("/api/products", AddCategoryRoute,AddAttributeRoute,AddProdutRoute,AddBannerRoute);
 app.use("/api/payment", PaymentRoute);
 
