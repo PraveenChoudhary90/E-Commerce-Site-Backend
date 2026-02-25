@@ -38,6 +38,7 @@ const productSchema = new mongoose.Schema(
 
      isDeleted: { type: Boolean, default: false } ,
      reviews: [reviewSchema],
+     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], 
   },
   { timestamps: true }
 );
