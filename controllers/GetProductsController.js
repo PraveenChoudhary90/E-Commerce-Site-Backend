@@ -2,16 +2,17 @@
 import Product from "../models/AddProductModel.js"
 
 
+
 export const GetProductsUser = async (req, res) => {
   try {
     const products = await Product.find({ isDeleted: false })
       .populate({
-        path: "product_category", // reference field
-        select: "name description", // jo fields chahiye
+        path: "product_category", // populate category
+        // get all fields
       })
       .populate({
-        path: "attributes.attribute", // agar attributes me reference hai
-        select: "name",
+        path: "attributes.attribute", // populate the attribute reference
+        populate: { path: "parentAttribute" }, // optional: populate parentAttribute too
       });
 
     res.status(200).send({
@@ -26,8 +27,6 @@ export const GetProductsUser = async (req, res) => {
     });
   }
 };
-
-
 
 
 
