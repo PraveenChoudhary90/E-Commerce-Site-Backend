@@ -13,7 +13,7 @@ const route = express.Router();
 route.post("/like", userAuth, toggleLikeProduct);
 
 // Get product details including likes
-route.get("/like/:productId", userAuth, getProductWithLikes);
+route.get("/getlike/:productId/:userId", userAuth, getProductWithLikes);
 
 // Get most liked products for homepage section
 route.get("/like/most-liked", getMostLikedProducts);
